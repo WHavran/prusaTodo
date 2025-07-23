@@ -49,3 +49,7 @@ Projekt obsahuje sadu unit testů s použitím `MockMvc`. Testy se zaměřují n
 ## Architektura
 
 V projektu je uplatněn architektonický vzor Controller – Service – Repository. Cílem bylo vytvořit strukturu, která umožní snadný přechod z in-memory úložiště na databázi s minimálními zásahy mimo repository vrstvu. Testy navíc pomáhají ověřit funkčnost při případné změně implementace.
+
+## Prostor pro zlepšení
+Zpracovaní CSV importu nyní spoléhá na dobře provedené řádkování. Určitě by bylo lepší řešit komplexněji.
+Řešení stránkování nahradit modernějším přístupem.
