@@ -20,9 +20,9 @@ public interface TaskService {
 
     void createByEntity(Task task);
 
-    Page<TaskAllDTO> importCreateCSV(MultipartFile file) throws Exception;
+    Page<TaskAllDTO> importCreateCSV(MultipartFile file);
 
-    Page<TaskAllDTO> importExistCSV(MultipartFile file) throws Exception;
+    Page<TaskAllDTO> importExistCSV(MultipartFile file);
 
     Page<SolvedPerDay> getSolvedSummary(Pageable pageable);
 

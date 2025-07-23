@@ -63,22 +63,14 @@ public class TaskController {
 
     @PostMapping("/csv/new")
     public ResponseEntity<Page<TaskAllDTO>> importCSVNew(@RequestParam("file") MultipartFile file){
-        try {
             Page<TaskAllDTO> listTaskDTO = taskService.importCreateCSV(file);
             return ResponseEntity.ok(listTaskDTO);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @PostMapping("/csv/exist")
     public ResponseEntity<Page<TaskAllDTO>> importCSVExist(@RequestParam("file") MultipartFile file){
-        try {
             Page<TaskAllDTO> listTaskDTO = taskService.importExistCSV(file);
             return ResponseEntity.ok(listTaskDTO);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
     }
 
     @PutMapping()

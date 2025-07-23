@@ -9,6 +9,7 @@ import com.havranek.todolist.model.entity.Status;
 import com.havranek.todolist.model.entity.Task;
 import com.havranek.todolist.repository.Repository;
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -83,7 +85,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Page<TaskAllDTO> importCreateCSV(MultipartFile file) throws Exception {
+    public Page<TaskAllDTO> importCreateCSV(MultipartFile file) {
 
         try (CSVReader reader = new CSVReader(new InputStreamReader(
                 file.getInputStream(), StandardCharsets.UTF_8))){
@@ -107,11 +109,13 @@ public class TaskServiceImpl implements TaskService {
             }
             Pageable defaultPageable = PageRequest.of(0, 20);
             return getAll(defaultPageable);
+        } catch (IOException | CsvValidationException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Page<TaskAllDTO> importExistCSV(MultipartFile file) throws Exception {
+    public Page<TaskAllDTO> importExistCSV(MultipartFile file) {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
                 file.getInputStream(), StandardCharsets.UTF_8))){
 
@@ -142,6 +146,8 @@ public class TaskServiceImpl implements TaskService {
             }
             Pageable defaultPageable = PageRequest.of(0, 20);
             return getAll(defaultPageable);
+        } catch (CsvValidationException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -4,6 +4,7 @@ import com.havranek.todolist.exceptions.EntityNotFound;
 import com.havranek.todolist.model.messages.ErrorResponse;
 import com.havranek.todolist.model.messages.ErrorResponseValidation;
 import com.havranek.todolist.model.messages.ErrorValidationField;
+import com.opencsv.exceptions.CsvValidationException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -74,7 +76,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler({ConstraintViolationException.class, IOException.class, CsvValidationException.class})
     public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
         String message = "Invalid CSV format";
         ErrorResponse errorResponse = new ErrorResponse(
